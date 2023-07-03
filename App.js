@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
@@ -25,31 +27,55 @@ const LoginScreen = () => {
     console.log('Password:', password);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return fontLoaded ? (
     <View style={styles.container}>
       <Image source={require('./assets/bhlogowhite.png')} style={styles.logo} />
 
       <Text style={styles.title}>Login</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+      </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Password</Text>
+        <View style={styles.passwordInputContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Enter your password"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={!showPassword}
+          />
+          <TouchableOpacity onPress={togglePasswordVisibility}>
+            <Ionicons
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={24}
+              color="gray"
+              style={styles.passwordIcon}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.forgotPasswordButton}>
+        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
 
       <View style={styles.signupContainer}>
@@ -84,20 +110,41 @@ const styles = StyleSheet.create({
     fontFamily: 'Gordita-Bold',
     marginBottom: 20,
   },
-  input: {
-    width: '80%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'gray',
+  inputContainer: {
     marginBottom: 10,
+    backgroundColor: '#F2F2F2',
+    borderRadius: 8,
+    width: '80%',
+  },
+  label: {
     paddingHorizontal: 10,
+    paddingTop: 8,
     fontFamily: 'Gordita-Regular',
+    color: 'gray',
+  },
+  input: {
+    paddingHorizontal: 10,
+    paddingBottom: 8,
+    fontFamily: 'Gordita-Regular',
+  },
+  passwordInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  passwordInput: {
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingBottom: 8,
+    fontFamily: 'Gordita-Regular',
+  },
+  passwordIcon: {
+    padding: 10,
   },
   button: {
     width: '80%',
     backgroundColor: 'blue',
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 20,
     marginBottom: 10,
   },
   buttonText: {
@@ -106,6 +153,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontFamily: 'Gordita-Bold',
+  },
+  forgotPasswordButton: {
+    marginBottom: 10,
+  },
+  forgotPasswordText: {
+    fontSize: 14,
+    color: 'gray',
+    fontFamily: 'Gordita-Regular',
   },
   signupContainer: {
     flexDirection: 'row',
