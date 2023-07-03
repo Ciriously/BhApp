@@ -33,8 +33,9 @@ const LoginScreen = () => {
 
   return fontLoaded ? (
     <View style={styles.container}>
+      <Image source={require('./assets/bhlogowhite.png')} style={styles.logo} />
+
       <View style={styles.topSection}>
-        <Image source={require('./assets/bhlogowhite.png')} style={styles.logo} />
         <Text style={styles.title}>Login</Text>
       </View>
 
@@ -42,7 +43,7 @@ const LoginScreen = () => {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.transparentOutline]}
             placeholder="Enter your email"
             value={email}
             onChangeText={(text) => setEmail(text)}
@@ -53,7 +54,7 @@ const LoginScreen = () => {
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Password</Text>
-          <View style={styles.passwordInputContainer}>
+          <View style={[styles.passwordInputContainer, styles.transparentOutline]}>
             <TextInput
               style={styles.passwordInput}
               placeholder="Enter your password"
@@ -72,26 +73,27 @@ const LoginScreen = () => {
           </View>
         </View>
 
+        <TouchableOpacity style={styles.forgotPasswordButton}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
           <Text style={[styles.buttonText, { fontSize: 18 }]}>Login</Text>
         </TouchableOpacity>
 
         <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>Don't have an account?</Text>
-          <TouchableOpacity>
-            <Text style={styles.signupLink}>Sign up</Text>
-          </TouchableOpacity>
+          <View style={styles.signupLine} />
+          <Text style={styles.signupText}>or signup now</Text>
+          <View style={styles.signupLine} />
         </View>
 
         <TouchableOpacity style={styles.createAccountContainer}>
-          <Text style={styles.createAccountText}>Create an account</Text>
+          <Text style={[styles.createAccountText, { fontSize: 18 }]}>Create an account</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.forgotPasswordButton}>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
+        {/* Bottom section content */}
       </View>
     </View>
   ) : null;
@@ -102,18 +104,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    paddingTop: 50,
     paddingBottom: 30,
-  },
-  topSection: {
-    alignItems: 'center',
-    marginBottom: 20,
   },
   logo: {
     width: 80,
     height: 80,
     position: 'absolute',
-    bottom: 400,
-    right: 150,
+    top: 20,
+    left: 20,
+  },
+  topSection: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   title: {
     fontSize: 30,
@@ -125,29 +128,41 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 10,
-    backgroundColor: '#F2F2F2',
-    borderRadius: 8,
   },
   label: {
     paddingHorizontal: 10,
     paddingTop: 8,
     fontFamily: 'Gordita-Regular',
     color: 'gray',
+    marginBottom: 5,
   },
   input: {
     paddingHorizontal: 10,
     paddingBottom: 8,
     fontFamily: 'Gordita-Bold',
+    marginBottom: 10,
+  },
+  transparentOutline: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
   },
   passwordInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
+    backgroundColor: 'transparent',
   },
   passwordInput: {
     flex: 1,
     paddingHorizontal: 10,
     paddingBottom: 8,
     fontFamily: 'Gordita-Bold',
+    backgroundColor: 'transparent',
   },
   passwordIcon: {
     padding: 10,
@@ -182,23 +197,25 @@ const styles = StyleSheet.create({
   },
   signupContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 10,
+  },
+  signupLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'gray',
   },
   signupText: {
     fontSize: 14,
-    marginRight: 5,
+    marginHorizontal: 10,
     fontFamily: 'Gordita-Regular',
-  },
-  signupLink: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: 'blue',
-    fontFamily: 'Gordita-Bold',
+    color: 'gray',
   },
   createAccountContainer: {
     backgroundColor: '#F2F2F2',
-    borderRadius: 8,
-    paddingVertical: 8,
+    borderRadius: 10,
+    paddingVertical: 12,
     paddingHorizontal: 16,
     marginBottom: 10,
   },
