@@ -33,61 +33,66 @@ const LoginScreen = () => {
 
   return fontLoaded ? (
     <View style={styles.container}>
-      <Image source={require('./assets/bhlogowhite.png')} style={styles.logo} />
-
-      <Text style={styles.title}>Login</Text>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
+      <View style={styles.topSection}>
+        <Image source={require('./assets/bhlogowhite.png')} style={styles.logo} />
+        <Text style={styles.title}>Login</Text>
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Password</Text>
-        <View style={styles.passwordInputContainer}>
+      <View style={styles.formContainer}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Email</Text>
           <TextInput
-            style={styles.passwordInput}
-            placeholder="Enter your password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={!showPassword}
+            style={styles.input}
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            autoCapitalize="none"
+            keyboardType="email-address"
           />
-          <TouchableOpacity onPress={togglePasswordVisibility}>
-            <Ionicons
-              name={showPassword ? 'eye-off' : 'eye'}
-              size={24}
-              color="gray"
-              style={styles.passwordIcon}
-            />
-          </TouchableOpacity>
         </View>
-      </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Password</Text>
+          <View style={styles.passwordInputContainer}>
+            <TextInput
+              style={styles.passwordInput}
+              placeholder="Enter your password"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity onPress={togglePasswordVisibility}>
+              <Ionicons
+                name={showPassword ? 'eye-off' : 'eye'}
+                size={24}
+                color="gray"
+                style={styles.passwordIcon}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
 
-      <TouchableOpacity style={styles.forgotPasswordButton}>
-        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.forgotPasswordButton}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
 
-      <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>Don't have an account?</Text>
-        <TouchableOpacity>
-          <Text style={styles.signupLink}>Sign up</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity>
-        <Text style={styles.createAccountLink}>Create an account</Text>
-      </TouchableOpacity>
+      <View style={styles.bottomSection}>
+        <TouchableOpacity style={styles.createAccountContainer}>
+          <Text style={styles.createAccountText}>Create an account</Text>
+        </TouchableOpacity>
+
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>Don't have an account?</Text>
+          <TouchableOpacity>
+            <Text style={styles.signupLink}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   ) : null;
 };
@@ -95,26 +100,30 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    paddingBottom: 30,
+  },
+  topSection: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   logo: {
     width: 80,
     height: 80,
-    position: 'absolute',
-    top: 20,
-    left: 20,
   },
   title: {
     fontSize: 24,
     fontFamily: 'Gordita-Bold',
     marginBottom: 20,
   },
+  formContainer: {
+    width: '80%',
+  },
   inputContainer: {
     marginBottom: 10,
     backgroundColor: '#F2F2F2',
     borderRadius: 8,
-    width: '80%',
   },
   label: {
     paddingHorizontal: 10,
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 10,
     paddingBottom: 8,
-    fontFamily: 'Gordita-Regular',
+    fontFamily: 'Gordita-Bold',
   },
   passwordInputContainer: {
     flexDirection: 'row',
@@ -135,14 +144,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     paddingBottom: 8,
-    fontFamily: 'Gordita-Regular',
+    fontFamily: 'Gordita-Bold',
   },
   passwordIcon: {
     padding: 10,
   },
   button: {
-    width: '80%',
-    backgroundColor: 'blue',
+    width: '100%',
+    backgroundColor: '#6658D3',
     paddingVertical: 10,
     borderRadius: 20,
     marginBottom: 10,
@@ -155,9 +164,25 @@ const styles = StyleSheet.create({
     fontFamily: 'Gordita-Bold',
   },
   forgotPasswordButton: {
+    alignSelf: 'flex-end',
     marginBottom: 10,
   },
   forgotPasswordText: {
+    fontSize: 14,
+    color: 'gray',
+    fontFamily: 'Gordita-Regular',
+  },
+  bottomSection: {
+    alignItems: 'center',
+  },
+  createAccountContainer: {
+    backgroundColor: '#F2F2F2',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  createAccountText: {
     fontSize: 14,
     color: 'gray',
     fontFamily: 'Gordita-Regular',
@@ -172,12 +197,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Gordita-Regular',
   },
   signupLink: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: 'blue',
-    fontFamily: 'Gordita-Bold',
-  },
-  createAccountLink: {
     fontSize: 14,
     fontWeight: 'bold',
     color: 'blue',
