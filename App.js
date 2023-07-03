@@ -43,7 +43,7 @@ const LoginScreen = () => {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Email</Text>
           <TextInput
-            style={[styles.input, styles.transparentOutline]}
+            style={[styles.input, styles.transparentOutline, styles.emailInput]}
             placeholder="Enter your email"
             value={email}
             onChangeText={(text) => setEmail(text)}
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
     fontFamily: 'Gordita-Bold',
     marginBottom: 20,
   },
@@ -130,9 +130,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   label: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingTop: 8,
-    fontFamily: 'Gordita-Regular',
+    fontFamily: 'Gordita-Bold',
     color: 'gray',
     marginBottom: 5,
   },
@@ -147,6 +147,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 8,
+  },
+  emailInput: {
+    height: 50,
   },
   passwordInputContainer: {
     flexDirection: 'row',
@@ -190,7 +193,8 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     fontSize: 14,
     color: 'gray',
-    fontFamily: 'Gordita-Regular',
+    fontFamily: 'Gordita-Bold',
+    bottom: 10,
   },
   bottomSection: {
     alignItems: 'center',
@@ -209,7 +213,7 @@ const styles = StyleSheet.create({
   signupText: {
     fontSize: 14,
     marginHorizontal: 10,
-    fontFamily: 'Gordita-Regular',
+    fontFamily: 'Gordita-Bold',
     color: 'gray',
   },
   createAccountContainer: {
@@ -218,6 +222,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     marginBottom: 10,
+    alignItems: 'center',
   },
   createAccountText: {
     fontSize: 14,
