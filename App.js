@@ -73,17 +73,7 @@ const LoginScreen = () => {
         </View>
 
         <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.forgotPasswordButton}>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.bottomSection}>
-        <TouchableOpacity style={styles.createAccountContainer}>
-          <Text style={styles.createAccountText}>Create an account</Text>
+          <Text style={[styles.buttonText, { fontSize: 18 }]}>Login</Text>
         </TouchableOpacity>
 
         <View style={styles.signupContainer}>
@@ -92,6 +82,16 @@ const LoginScreen = () => {
             <Text style={styles.signupLink}>Sign up</Text>
           </TouchableOpacity>
         </View>
+
+        <TouchableOpacity style={styles.createAccountContainer}>
+          <Text style={styles.createAccountText}>Create an account</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.bottomSection}>
+        <TouchableOpacity style={styles.forgotPasswordButton}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
       </View>
     </View>
   ) : null;
@@ -111,9 +111,12 @@ const styles = StyleSheet.create({
   logo: {
     width: 80,
     height: 80,
+    position: 'absolute',
+    bottom: 400,
+    right: 150,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontFamily: 'Gordita-Bold',
     marginBottom: 20,
   },
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 10,
   },
@@ -177,18 +180,6 @@ const styles = StyleSheet.create({
   bottomSection: {
     alignItems: 'center',
   },
-  createAccountContainer: {
-    backgroundColor: '#F2F2F2',
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginBottom: 10,
-  },
-  createAccountText: {
-    fontSize: 14,
-    color: 'gray',
-    fontFamily: 'Gordita-Regular',
-  },
   signupContainer: {
     flexDirection: 'row',
     marginBottom: 10,
@@ -203,6 +194,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'blue',
     fontFamily: 'Gordita-Bold',
+  },
+  createAccountContainer: {
+    backgroundColor: '#F2F2F2',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  createAccountText: {
+    fontSize: 14,
+    color: 'gray',
+    fontFamily: 'Gordita-Regular',
   },
 });
 
