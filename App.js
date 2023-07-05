@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { FlatList, StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView } from "react-native";
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+import { Picker } from '@react-native-picker/picker';
 
 const BillingSummaryPage = ({ transactions, navigation }) => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('');
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -40,8 +42,21 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <Text style={styles.header}>Billing</Text>
       </View>
       <View style={styles.billingDetailsContainer}>
-        <Text style={styles.billingDetailsHeader}>Billing Details</Text>
-        <Text style={styles.billingDetailsSubtext}>For: Aditya</Text>
+        <Text style={styles.billingDetailsHeader}>Billing Details For</Text>
+        <Text style={styles.billingDetailsSubtext}>Account: Aditya</Text>
+      </View>
+      <View style={styles.monthPickerContainer}>
+        <Text style={styles.monthPickerLabel}>Select Month: </Text>
+        <Picker
+          style={styles.monthPicker}
+          selectedValue={selectedMonth}
+          onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+        >
+          <Picker.Item label="January" value="January" />
+          <Picker.Item label="February" value="February" />
+          <Picker.Item label="March" value="March" />
+          {/* Add more months as needed */}
+        </Picker>
       </View>
       <FlatList
         data={filteredTransactions}
@@ -67,7 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    fontFamily: "GorditaBold",
+    fontFamily: "Gordita-Bold",
   },
   headerContainer: {
     flexDirection: "row",
@@ -87,32 +102,46 @@ const styles = StyleSheet.create({
   },
   billingDetailsHeader: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "Gordita-Regular",
   },
   billingDetailsSubtext: {
     fontSize: 14,
     marginTop: 4,
+  },
+  monthPickerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  monthPickerLabel: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+  },
+  monthPicker: {
+    flex: 1,
+    height: 40,
+    fontFamily: 'Gordita-Bold',
   },
   transaction: {
     marginVertical: 8,
   },
   date: {
     fontSize: 16,
-    fontFamily: "GorditaBold",
+    fontFamily: "Gordita-Bold",
   },
   amount: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "GorditaBold",
+    fontFamily: "Gordita-Bold",
   },
   description: {
     fontSize: 14,
-    fontFamily: "GorditaBold",
+    fontFamily: "Gordita-Bold",
   },
   filterInput: {
     width: 200,
     marginBottom: 16,
-    fontFamily: "GorditaBold",
+    fontFamily: "Gordita-Bold",
   },
   backButton: {
     alignSelf: "flex-start",
