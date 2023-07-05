@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView } from "react-native";
+import { FlatList, StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Modal } from "react-native";
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const BillingSummaryPage = ({ transactions, navigation }) => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -29,6 +31,14 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
     );
   };
 
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
   if (!fontsLoaded) {
     return null; // or render a loading indicator
   }
@@ -45,19 +55,32 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <Text style={styles.billingDetailsHeader}>Billing Details For</Text>
         <Text style={styles.billingDetailsSubtext}>Account: Aditya</Text>
       </View>
-      <View style={styles.monthPickerContainer}>
-        <Text style={styles.monthPickerLabel}>Select Month: </Text>
-        <Picker
-          style={styles.monthPicker}
-          selectedValue={selectedMonth}
-          onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-        >
-          <Picker.Item label="January" value="January" />
-          <Picker.Item label="February" value="February" />
-          <Picker.Item label="March" value="March" />
-          {/* Add more months as needed */}
-        </Picker>
-      </View>
+      <TouchableOpacity style={styles.monthContainer} onPress={handleOpenModal}>
+  <Text style={styles.monthLabel}>{selectedMonth ? selectedMonth : 'Select Month'}</Text>
+  <Icon name="caret-down" size={16} color="black" style={styles.dropdownIcon} />
+      </TouchableOpacity>
+
+      <Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
+        <TouchableOpacity style={styles.modalBackground} onPress={handleCloseModal} />
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Picker
+              style={styles.monthPicker}
+              selectedValue={selectedMonth}
+              onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+            >
+              <Picker.Item label="Select Month" value="" />
+              <Picker.Item label="January" value="January" />
+              <Picker.Item label="February" value="February" />
+              <Picker.Item label="March" value="March" />
+              {/* Add more months as needed */}
+            </Picker>
+            <TouchableOpacity style={styles.modalCloseButton} onPress={handleCloseModal}>
+              <Text style={styles.modalCloseButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <FlatList
         data={filteredTransactions}
         keyExtractor={(transaction) => transaction.id}
@@ -108,19 +131,47 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 4,
   },
-  monthPickerContainer: {
+  monthContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+    backgroundColor: '#F0F0F0',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 10,
   },
-  monthPickerLabel: {
+  monthLabel: {
+    flex: 1,
     fontSize: 16,
     fontFamily: 'Gordita-Bold',
+    color: '#888888',
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 10,
+    width: '80%',
   },
   monthPicker: {
-    flex: 1,
-    height: 40,
     fontFamily: 'Gordita-Bold',
+  },
+  modalCloseButton: {
+    marginTop: 16,
+    alignSelf: 'flex-end',
+  },
+  modalCloseButtonText: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+    color: 'blue',
   },
   transaction: {
     marginVertical: 8,
