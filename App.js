@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image } from "react-native";
 import hatIcon from "./assets/hatIcon.png";
 
-
 const BillingSummaryPage = ({ transactions, navigation }) => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -50,9 +49,12 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="blue" />
+          <View style={styles.backButtonCircleOutline}>
+            <Ionicons name="arrow-back" size={24} color="gray" style={styles.backIcon} />
+          </View>
         </TouchableOpacity>
         <Text style={styles.header}>Billing</Text>
+        <View style={styles.smallCircle} />
       </View>
       <View style={styles.billingDetailsContainer}>
         <Text style={styles.billingDetailsHeader}>Billing Details For</Text>
@@ -63,34 +65,39 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <Icon name="caret-down" size={16} color="black" style={styles.dropdownIcon} />
       </TouchableOpacity>
 
-      <Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
-        <TouchableOpacity style={styles.modalBackground} onPress={handleCloseModal} />
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Picker
-              style={styles.monthPicker}
-              selectedValue={selectedMonth}
-              onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-            >
-              <Picker.Item label="Select Month" value="" />
-              <Picker.Item label="January" value="January" />
-              <Picker.Item label="February" value="February" />
-              <Picker.Item label="March" value="March" />
-              {/* Add more months as needed */}
-            </Picker>
-            <TouchableOpacity style={styles.modalCloseButton} onPress={handleCloseModal}>
-              <Text style={styles.modalCloseButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+   
+
+<Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
+  <TouchableOpacity style={styles.modalBackground} onPress={handleCloseModal} />
+  <View style={styles.modalContainer}>
+    <View style={styles.modalContent}>
+      <Picker
+        style={styles.monthPicker}
+        selectedValue={selectedMonth}
+        onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+      >
+        <Picker.Item label="Select Month" value="" />
+        <Picker.Item label="January" value="January" />
+        <Picker.Item label="February" value="February" />
+        <Picker.Item label="March" value="March" />
+        {/* Add more months as needed */}
+      </Picker>
+      <TouchableOpacity style={styles.modalCloseButton} onPress={handleCloseModal}>
+        <Text style={styles.modalCloseButtonText}>Close</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
+
+
 
       <View style={styles.offersContainer}>
         <View style={styles.offerSection}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Image source={hatIcon} style={styles.hatIcon} resizeMode="contain" />
-            </TouchableOpacity>
-
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <View style={styles.backButtonCircleOutline}>
+              <Image source={hatIcon} style={styles.hatIcon} resizeMode="contain" />
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.offerSection}>
           <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
@@ -208,9 +215,7 @@ const styles = StyleSheet.create({
   hatIcon: {
     width: 34,
     height: 34,
-    
   },
-  
   description: {
     fontSize: 14,
     fontFamily: "Gordita-Bold",
@@ -224,6 +229,25 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     padding: 8,
     marginTop: 15,
+  },
+  backButtonCircleOutline: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderColor: 'gray',
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backIcon: {
+    color: 'gray',
+  },
+  smallCircle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'gray',
+    marginLeft: 5,
   },
   offersContainer: {
     backgroundColor: 'transparent',
