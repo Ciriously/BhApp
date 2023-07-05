@@ -56,8 +56,8 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <Text style={styles.billingDetailsSubtext}>Account: Aditya</Text>
       </View>
       <TouchableOpacity style={styles.monthContainer} onPress={handleOpenModal}>
-  <Text style={styles.monthLabel}>{selectedMonth ? selectedMonth : 'Select Month'}</Text>
-  <Icon name="caret-down" size={16} color="black" style={styles.dropdownIcon} />
+        <Text style={styles.monthLabel}>{selectedMonth ? selectedMonth : 'Select Month'}</Text>
+        <Icon name="caret-down" size={16} color="black" style={styles.dropdownIcon} />
       </TouchableOpacity>
 
       <Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
@@ -81,6 +81,17 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           </View>
         </View>
       </Modal>
+
+      <View style={styles.offersContainer}>
+        <View style={styles.offersHeaderContainer}>
+          <Icon name="handshake-o" size={24} color="black" style={styles.handshakeIcon} />
+          <Text style={styles.offersHeaderText}>Offers for New Graduate Students</Text>
+        </View>
+        <Text style={styles.offerText}>Offer 1: Lorem ipsum dolor sit amet</Text>
+        <Text style={styles.offerText}>Offer 2: Consectetur adipiscing elit</Text>
+        <Text style={styles.offerText}>Offer 3: Sed do eiusmod tempor incididunt</Text>
+      </View>
+
       <FlatList
         data={filteredTransactions}
         keyExtractor={(transaction) => transaction.id}
@@ -92,6 +103,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           </View>
         )}
       />
+
       <TextInput
         placeholder="Filter transactions"
         onChangeText={handleFilter}
@@ -198,6 +210,30 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     padding: 8,
     marginTop: 15,
+  },
+  offersContainer: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 16,
+    marginTop: 16,
+    borderRadius: 10,
+  },
+  offersHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  handshakeIcon: {
+    marginRight: 8,
+  },
+  offersHeaderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  offerText: {
+    marginBottom: 8,
+    fontSize: 14,
   },
 });
 
