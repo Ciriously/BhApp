@@ -4,6 +4,9 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Image } from "react-native";
+import hatIcon from "./assets/hatIcon.png";
+
 
 const BillingSummaryPage = ({ transactions, navigation }) => {
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -84,14 +87,17 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
 
       <View style={styles.offersContainer}>
         <View style={styles.offerSection}>
-          <Icon name="handshake-o" size={20} color="black" style={styles.handshakeIcon} />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Image source={hatIcon} style={styles.hatIcon} resizeMode="contain" />
+            </TouchableOpacity>
+
         </View>
         <View style={styles.offerSection}>
-          <Text style={styles.offersHeaderText}>Offers:</Text>
+          <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
         </View>
         <View style={[styles.offerSection, styles.offerContainer]}>
-          <Text style={styles.offerText}>799$ Lifetime</Text>
-          <Text style={styles.offerText}>2 line text of advertisement</Text>
+          {/* <Text style={styles.offerText}>799$ Lifetime</Text> */}
+          <Text style={styles.offerText}>One Time payment for all materials till you Graduate</Text>
         </View>
       </View>
 
@@ -199,6 +205,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "Gordita-Bold",
   },
+  hatIcon: {
+    width: 34,
+    height: 34,
+    
+  },
+  
   description: {
     fontSize: 14,
     fontFamily: "Gordita-Bold",
@@ -223,16 +235,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
-  handshakeIcon: {
-    marginRight: 8,
-  },
   offerSection: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  handshakeIcon: {
+    marginRight: 16,
   },
   offersHeaderText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
+    fontFamily: 'Gordita-Bold',
+    color: '#6658D3',
+    textAlign: 'center',
+    display: 'flex',
   },
   offerContainer: {
     flex: 2,
@@ -241,10 +258,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   offerText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'blue',
+    fontSize: 12,
+    color: 'gray',
     marginRight: 8,
+    fontFamily: "Gordita-Bold",
   },
 });
 
