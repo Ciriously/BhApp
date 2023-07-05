@@ -83,13 +83,16 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
       </Modal>
 
       <View style={styles.offersContainer}>
-        <View style={styles.offersHeaderContainer}>
-          <Icon name="handshake-o" size={24} color="black" style={styles.handshakeIcon} />
-          <Text style={styles.offersHeaderText}>Offers for New Graduate Students</Text>
+        <View style={styles.offerSection}>
+          <Icon name="handshake-o" size={20} color="black" style={styles.handshakeIcon} />
         </View>
-        <Text style={styles.offerText}>Offer 1: Lorem ipsum dolor sit amet</Text>
-        <Text style={styles.offerText}>Offer 2: Consectetur adipiscing elit</Text>
-        <Text style={styles.offerText}>Offer 3: Sed do eiusmod tempor incididunt</Text>
+        <View style={styles.offerSection}>
+          <Text style={styles.offersHeaderText}>Offers:</Text>
+        </View>
+        <View style={[styles.offerSection, styles.offerContainer]}>
+          <Text style={styles.offerText}>799$ Lifetime</Text>
+          <Text style={styles.offerText}>2 line text of advertisement</Text>
+        </View>
       </View>
 
       <FlatList
@@ -103,7 +106,6 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           </View>
         )}
       />
-
       <TextInput
         placeholder="Filter transactions"
         onChangeText={handleFilter}
@@ -214,26 +216,35 @@ const styles = StyleSheet.create({
   offersContainer: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: 'black',
     padding: 16,
-    marginTop: 16,
-    borderRadius: 10,
-  },
-  offersHeaderContainer: {
+    marginBottom: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    borderRadius: 10,
   },
   handshakeIcon: {
     marginRight: 8,
   },
+  offerSection: {
+    flex: 1,
+  },
   offersHeaderText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'black',
+  },
+  offerContainer: {
+    flex: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   offerText: {
-    marginBottom: 8,
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'blue',
+    marginRight: 8,
   },
 });
 
