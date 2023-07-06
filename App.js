@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Modal } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Modal, Image } from "react-native";
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image } from "react-native";
 import hatIcon from "./assets/hatIcon.png";
+import { FlatList } from 'react-native';
 
 const BillingSummaryPage = ({ transactions, navigation }) => {
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,14 +23,6 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
 
     loadFonts();
   }, []);
-
-  const handleFilter = (filterText) => {
-    setFilteredTransactions(
-      transactions.filter((transaction) => {
-        return transaction.description.toLowerCase().includes(filterText.toLowerCase());
-      })
-    );
-  };
 
   const handleOpenModal = () => {
     setIsModalVisible(true);
@@ -53,63 +44,63 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
             <Ionicons name="arrow-back" size={24} color="gray" style={styles.backIcon} />
           </View>
         </TouchableOpacity>
-        <Text style={styles.header}>Billing</Text>
-        <View style={styles.smallCircle} />
+        <Text style={styles.headerText}>Billing</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Image source={require('./assets/smallCircle.png')} style={styles.smallCircleIcon} resizeMode="contain" />
+        </TouchableOpacity>
       </View>
       <View style={styles.billingDetailsContainer}>
         <Text style={styles.billingDetailsHeader}>Billing Details For</Text>
-        <Text style={styles.billingDetailsSubtext}>Account: Aditya</Text>
+        <Text style={styles.billingDetailsSubtext}>Account: Adityad12@gmail.com</Text>
       </View>
       <TouchableOpacity style={styles.monthContainer} onPress={handleOpenModal}>
         <Text style={styles.monthLabel}>{selectedMonth ? selectedMonth : 'Select Month'}</Text>
         <Icon name="caret-down" size={16} color="black" style={styles.dropdownIcon} />
       </TouchableOpacity>
 
-   
-
-<Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
-  <TouchableOpacity style={styles.modalBackground} onPress={handleCloseModal} />
-  <View style={styles.modalContainer}>
-    <View style={styles.modalContent}>
-      <Picker
-        style={styles.monthPicker}
-        selectedValue={selectedMonth}
-        onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-      >
-        <Picker.Item label="Select Month" value="" />
-        <Picker.Item label="January" value="January" />
-        <Picker.Item label="February" value="February" />
-        <Picker.Item label="March" value="March" />
-        {/* Add more months as needed */}
-      </Picker>
-      <TouchableOpacity style={styles.modalCloseButton} onPress={handleCloseModal}>
-        <Text style={styles.modalCloseButtonText}>Close</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-</Modal>
-
-
+      <Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
+        <TouchableOpacity style={styles.modalBackground} onPress={handleCloseModal} />
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Picker
+              style={styles.monthPicker}
+              selectedValue={selectedMonth}
+              onValueChange={(itemValue) => setSelectedMonth(itemValue)}
+            >
+              <Picker.Item label="Select Month" value="" />
+              <Picker.Item label="January" value="January" />
+              <Picker.Item label="February" value="February" />
+              <Picker.Item label="March" value="March" />
+              {/* Add more months as needed */}
+            </Picker>
+            <TouchableOpacity style={styles.modalCloseButton} onPress={handleCloseModal}>
+              <Text style={styles.modalCloseButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       <View style={styles.offersContainer}>
         <View style={styles.offerSection}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <View style={styles.backButtonCircleOutline}>
+            <View style={styles.hatIcon}>
               <Image source={hatIcon} style={styles.hatIcon} resizeMode="contain" />
             </View>
           </TouchableOpacity>
-        </View>
-        <View style={styles.offerSection}>
           <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
+          {/* <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <View style={styles.backButtonCircleOutline}>
+              <Image source={require('./assets/smallCircle.png')} style={styles.smallCircleIcon} resizeMode="contain" />
+            </View>
+          </TouchableOpacity> */}
         </View>
         <View style={[styles.offerSection, styles.offerContainer]}>
-          {/* <Text style={styles.offerText}>799$ Lifetime</Text> */}
           <Text style={styles.offerText}>One Time payment for all materials till you Graduate</Text>
         </View>
       </View>
 
       <FlatList
-        data={filteredTransactions}
+        data={transactions}
         keyExtractor={(transaction) => transaction.id}
         renderItem={({ item }) => (
           <View style={styles.transaction}>
@@ -119,11 +110,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           </View>
         )}
       />
-      <TextInput
-        placeholder="Filter transactions"
-        onChangeText={handleFilter}
-        style={styles.filterInput}
-      />
+
     </SafeAreaView>
   );
 };
@@ -137,26 +124,27 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 19,
+    marginBottom: 16,
   },
-  header: {
+  headerText: {
     fontSize: 20,
     fontWeight: "bold",
-    flex: 1,
     textAlign: "center",
-    marginStart: -35,
-    marginTop: 15,
   },
   billingDetailsContainer: {
     marginBottom: 16,
   },
   billingDetailsHeader: {
-    fontSize: 16,
-    fontFamily: "Gordita-Regular",
+    fontSize: 12,
+    fontFamily: "Gordita-Bold",
+    color: "#888888",
   },
   billingDetailsSubtext: {
-    fontSize: 14,
+    fontSize: 18,
     marginTop: 4,
+    fontFamily: "Gordita-Bold",
   },
   monthContainer: {
     flexDirection: 'row',
@@ -215,14 +203,11 @@ const styles = StyleSheet.create({
   hatIcon: {
     width: 34,
     height: 34,
+    marginBottom: 16,
+    
   },
   description: {
     fontSize: 14,
-    fontFamily: "Gordita-Bold",
-  },
-  filterInput: {
-    width: 200,
-    marginBottom: 16,
     fontFamily: "Gordita-Bold",
   },
   backButton: {
@@ -235,6 +220,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     borderColor: 'gray',
+    color: 'gray',
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -247,7 +233,6 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     backgroundColor: 'gray',
-    marginLeft: 5,
   },
   offersContainer: {
     backgroundColor: 'transparent',
@@ -263,23 +248,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  handshakeIcon: {
-    marginRight: 16,
+    justifyContent: 'center',
   },
   offersHeaderText: {
     fontSize: 16,
     fontFamily: 'Gordita-Bold',
     color: '#6658D3',
     textAlign: 'center',
-    display: 'flex',
+    flex: 1,
   },
   offerContainer: {
-    flex: 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  smallCircleIcon: {
+    width: 35,
+    height: 35,
+    alignSelf: "flex-end",
+    marginBottom: 16,
   },
   offerText: {
     fontSize: 12,
