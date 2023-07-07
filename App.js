@@ -110,6 +110,10 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           )}
         />
       </View>
+      <View style={styles.totalAmountContainer}>
+        <Text style={styles.totalAmountText}>Total Amount:</Text>
+        <Text style={styles.amountText}>$500</Text>
+      </View>
     </SafeAreaView>
   );
 };
@@ -197,7 +201,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   offerSection: {
-    flex: 1,
+flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -243,20 +247,36 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   separator: {
-    height: 0.5,
+    height: 1,
     backgroundColor: 'gray',
     marginBottom: 5,
-    
   },
   listItemText: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Gordita-Bold',
-    color: 'black',
+    color: 'gray',
   },
   listItemRightText: {
     fontSize: 12,
     fontFamily: 'Gordita-Regular',
     color: 'gray',
+  },
+  totalAmountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 16,
+  },
+  totalAmountText: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Regular',
+    marginRight: 8,
+    alignSelf: 'flex-start',
+  },
+  amountText: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+    color: 'black',
   },
 });
 
