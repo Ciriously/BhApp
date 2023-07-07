@@ -120,19 +120,19 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
       </View>
       <View style={styles.footerContainer}>
         <View style={styles.footerItem}>
-          <Ionicons name="home" size={16} color="black" />
+          <Ionicons name="apps" size={16} color="black" />
         </View>
         <View style={styles.footerItem}>
-          <Ionicons name="cart" size={16} color="black" />
+          <Ionicons name="book" size={16} color="black" />
         </View>
         <View style={styles.footerItem}>
-          <Ionicons name="person" size={16} color="black" />
+          <Ionicons name="text" size={16} color="black" />
         </View>
         <View style={styles.footerItem}>
-          <Ionicons name="settings" size={16} color="black" />
+          <Ionicons name="people" size={16} color="black" />
         </View>
         <View style={styles.footerItem}>
-          <Ionicons name="help-circle" size={16} color="black" />
+          <Ionicons name="download" size={16} color="black" />
         </View>
       </View>
     </SafeAreaView>
