@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Modal, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Modal, Image, FlatList } from "react-native";
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import hatIcon from "./assets/hatIcon.png";
-import { FlatList } from 'react-native';
 
 const BillingSummaryPage = ({ transactions, navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -36,6 +35,8 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
     return null; // or render a loading indicator
   }
 
+  const listData = Array.from(Array(9).keys()); // Example list data with 9 items
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -45,7 +46,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           </View>
         </TouchableOpacity>
         <Text style={styles.headerText}>Billing</Text>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.smallCircleButton}>
           <Image source={require('./assets/smallCircle.png')} style={styles.smallCircleIcon} resizeMode="contain" />
         </TouchableOpacity>
       </View>
@@ -88,29 +89,27 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
             </View>
           </TouchableOpacity>
           <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
-          {/* <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <View style={styles.backButtonCircleOutline}>
-              <Image source={require('./assets/smallCircle.png')} style={styles.smallCircleIcon} resizeMode="contain" />
-            </View>
-          </TouchableOpacity> */}
         </View>
         <View style={[styles.offerSection, styles.offerContainer]}>
           <Text style={styles.offerText}>One Time payment for all materials till you Graduate</Text>
         </View>
       </View>
 
-      <FlatList
-        data={transactions}
-        keyExtractor={(transaction) => transaction.id}
-        renderItem={({ item }) => (
-          <View style={styles.transaction}>
-            <Text style={styles.date}>{item.date}</Text>
-            <Text style={styles.amount}>${item.amount}</Text>
-            <Text style={styles.description}>{item.description}</Text>
-          </View>
-        )}
-      />
-
+      <View style={styles.transactionListContainer}>
+        <FlatList
+          data={listData}
+          keyExtractor={(item) => item.toString()}
+          renderItem={({ item, index }) => (
+            <>
+              {index > 0 && <View style={styles.separator} />}
+              <View style={styles.listItem}>
+                <Text style={styles.listItemText}>Item {item + 1}</Text>
+                <Text style={styles.listItemRightText}>Additional Info</Text>
+              </View>
+            </>
+          )}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -125,7 +124,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 19,
     marginBottom: 16,
   },
   headerText: {
@@ -188,52 +186,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Gordita-Bold',
     color: 'blue',
   },
-  transaction: {
-    marginVertical: 8,
-  },
-  date: {
-    fontSize: 16,
-    fontFamily: "Gordita-Bold",
-  },
-  amount: {
-    fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "Gordita-Bold",
-  },
-  hatIcon: {
-    width: 34,
-    height: 34,
-    marginBottom: 16,
-    
-  },
-  description: {
-    fontSize: 14,
-    fontFamily: "Gordita-Bold",
-  },
-  backButton: {
-    alignSelf: "flex-start",
-    padding: 8,
-    marginTop: 15,
-  },
-  backButtonCircleOutline: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderColor: 'gray',
-    color: 'gray',
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backIcon: {
-    color: 'gray',
-  },
-  smallCircle: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: 'gray',
-  },
   offersContainer: {
     backgroundColor: 'transparent',
     borderWidth: 1,
@@ -262,17 +214,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  smallCircleIcon: {
-    width: 35,
-    height: 35,
+  smallCircleButton: {
     alignSelf: "flex-end",
-    marginBottom: 16,
+    padding: 8,
+    marginTop: 15,
+  },
+  smallCircleIcon: {
+    width: 30,
+    height: 30,
+    alignSelf: "flex-end",
   },
   offerText: {
     fontSize: 12,
     color: 'gray',
     marginRight: 8,
     fontFamily: "Gordita-Bold",
+  },
+  transactionListContainer: {
+    flex: 1,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 10,
+    padding: 16,
+  },
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  separator: {
+    height: 0.5,
+    backgroundColor: 'gray',
+    marginBottom: 5,
+    
+  },
+  listItemText: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+    color: 'black',
+  },
+  listItemRightText: {
+    fontSize: 12,
+    fontFamily: 'Gordita-Regular',
+    color: 'gray',
   },
 });
 
