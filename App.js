@@ -111,8 +111,29 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         />
       </View>
       <View style={styles.totalAmountContainer}>
-        <Text style={styles.totalAmountText}>Total Amount:</Text>
-        <Text style={styles.amountText}>$500</Text>
+        <View style={styles.totalAmountTextContainer}>
+          <Text style={styles.totalAmountTextLabel}>Total Amount:</Text>
+        </View>
+        <View style={styles.amountTextContainer}>
+          <Text style={styles.amountText}>$500</Text>
+        </View>
+      </View>
+      <View style={styles.footerContainer}>
+        <View style={styles.footerItem}>
+          <Ionicons name="home" size={16} color="black" />
+        </View>
+        <View style={styles.footerItem}>
+          <Ionicons name="cart" size={16} color="black" />
+        </View>
+        <View style={styles.footerItem}>
+          <Ionicons name="person" size={16} color="black" />
+        </View>
+        <View style={styles.footerItem}>
+          <Ionicons name="settings" size={16} color="black" />
+        </View>
+        <View style={styles.footerItem}>
+          <Ionicons name="help-circle" size={16} color="black" />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -162,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Gordita-Bold',
     color: '#888888',
-  },
+   },
   modalBackground: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -201,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   offerSection: {
-flex: 1,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -264,19 +285,41 @@ flex: 1,
   totalAmountContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     marginTop: 16,
+    marginLeft: 16,
   },
-  totalAmountText: {
-    fontSize: 16,
-    fontFamily: 'Gordita-Regular',
+  totalAmountTextContainer: {
     marginRight: 8,
-    alignSelf: 'flex-start',
+  },
+  totalAmountTextLabel: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+  },
+  amountTextContainer: {
+    backgroundColor: 'white',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 10,
   },
   amountText: {
     fontSize: 16,
     fontFamily: 'Gordita-Bold',
     color: 'black',
+    alignSelf: 'flex-end',
+  },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderTopWidth: 1,
+    borderTopColor: 'lightblue',
+  },
+  footerItem: {
+    alignItems: 'center',
   },
 });
 
