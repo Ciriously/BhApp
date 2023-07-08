@@ -32,18 +32,18 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
   };
 
   const listData = [
-    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' ,fontSize:18 } },
-    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "-₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
-    { label: 'Total Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹699", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' , fontSize : 14} },
+    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹100", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
+    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹699", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' } },
+    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "24/4/2022", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
+    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "Aditya.D.Mishra", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' } },
+    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "BH2021VERSION1", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
+    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "Lifetime-Active", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' } },
+    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "Till Graduate", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
+    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "No Charges", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
   ];
 
+  const totalPay = { label: 'Total Amount Paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' , fontSize : 20 }, rightText: "₹699.00", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' ,fontSize : 20 } };
 
   if (!fontsLoaded) {
     return null; // or render a loading indicator
@@ -118,6 +118,10 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
             </View>
           )}
         />
+        <View style={styles.totalPayContainer}>
+          <Text style={[styles.listItemLeftText, totalPay.leftTextStyle]}>{totalPay.label}</Text>
+          <Text style={[styles.listItemRightText, totalPay.rightTextStyle]}>{totalPay.rightText}</Text>
+        </View>
       </View>
 
       <View style={styles.footerContainer}>
@@ -264,6 +268,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F0F0',
     borderRadius: 10,
     padding: 16,
+    backgroundColor: '#F2F2F2',
   },
   listItem: {
     flexDirection: 'row',
@@ -283,6 +288,13 @@ const styles = StyleSheet.create({
   listItemRightText: {
     fontSize: 12,
     fontFamily: 'Gordita-Regular',
+  },
+  totalPayContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    backgroundColor: 'white',
   },
   footerContainer: {
     flexDirection: 'row',
