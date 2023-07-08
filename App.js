@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Font from 'expo-font';
 
 const FeedbackPage = () => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Gordita-Bold': require('./assets/fonts/Gordita-Bold.ttf'),
+        'Gordita-Regular': require('./assets/fonts/Gordita-Regular.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null; // or render a loading indicator
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -56,6 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: 'white',
     marginBottom: 16,
+    fontFamily: 'Gordita-Bold',
   },
   inlineTextContainer: {
     flexDirection: 'row',
@@ -64,6 +84,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 12,
     color: 'white',
+    fontFamily: 'Gordita-Regular',
   },
   secondSubText: {
     fontWeight: 'bold',
