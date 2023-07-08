@@ -32,23 +32,18 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
   };
 
   const listData = [
-    { name: 'plan value',  textStyle: { color: 'gray', fontFamily: 'Gordita-Bold' } },
-    { name: 'Discount Applied', icon: 'banana', textStyle: { color: 'yellow', fontFamily: 'Gordita-Regular' } },
-    { name: 'Amount paid', icon: 'cherry', textStyle: { color: 'green', fontFamily: 'Gordita-Bold' } },
-    { name: 'Date of Payment', icon: 'orange', textStyle: { color: 'orange', fontFamily: 'Gordita-Regular' } },
-    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
-    { name: 'Payment name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
-    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
-    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
-    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
+    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' ,fontSize:18 } },
+    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "-₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
+    { label: 'Total Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹699", rightTextStyle: { color: 'red', fontFamily: 'Gordita-Bold' } },
   ];
 
-  const getItemPrice = (itemName) => {
-    // Replace this with your logic to retrieve the price for the given item name
-    // You can use the transactions or any other data source to determine the price
-    // Return the price or an appropriate placeholder if the price is not available
-    return "$9.99";
-  };
 
   if (!fontsLoaded) {
     return null; // or render a loading indicator
@@ -116,17 +111,11 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <FlatList
           data={listData}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <>
-              {index > 0 && <View style={styles.separator} />}
-              <View style={styles.listItem}>
-                <Text style={[styles.listItemText, item.textStyle]}>{item.name}
-                </Text>
-                <Text style={[styles.listItemRightText, item.textStyle]}>
-                  {getItemPrice(item.name)}
-                </Text>
-              </View>
-            </>
+          renderItem={({ item }) => (
+            <View style={styles.listItem}>
+              <Text style={[styles.listItemLeftText, item.leftTextStyle]}>{item.label}</Text>
+              <Text style={[styles.listItemRightText, item.rightTextStyle]}>{item.rightText}</Text>
+            </View>
           )}
         />
       </View>
@@ -135,23 +124,18 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <View style={styles.footerRow}>
           <TouchableOpacity style={styles.footerIconContainer}>
             <Icon name="home" size={24} color="black" style={styles.footerIcon} />
-            {/* <Text style={styles.footerText}>Home</Text> */}
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerIconContainer}>
             <Icon name="heart" size={24} color="black" style={styles.footerIcon} />
-            {/* <Text style={styles.footerText}>Favorites</Text> */}
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerIconContainer}>
             <Icon name="bell" size={24} color="black" style={styles.footerIcon} />
-            {/* <Text style={styles.footerText}>Notifications</Text> */}
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerIconContainer}>
             <Icon name="user" size={24} color="black" style={styles.footerIcon} />
-            {/* <Text style={styles.footerText}>Profile</Text> */}
           </TouchableOpacity>
           <TouchableOpacity style={styles.footerIconContainer}>
             <Icon name="cog" size={24} color="black" style={styles.footerIcon} />
-            {/* <Text style={styles.footerText}>Settings</Text> */}
           </TouchableOpacity>
         </View>
       </View>
@@ -292,7 +276,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     marginBottom: 5,
   },
-  listItemText: {
+  listItemLeftText: {
     fontSize: 14,
     fontFamily: 'Gordita-Bold',
   },
@@ -309,7 +293,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderTopWidth: 1,
     borderTopColor: 'lightblue',
-   
   },
   footerRow: {
     flexDirection: 'row',
@@ -323,11 +306,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 1,
   },
-  // footerText: {
-  //   fontSize: 12,
-  //   fontFamily: 'Gordita-Bold',
-  //   textAlign: 'center',
-  // },
 });
 
 export default BillingSummaryPage;
