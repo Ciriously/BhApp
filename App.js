@@ -31,11 +31,28 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
     setIsModalVisible(false);
   };
 
+  const listData = [
+    { name: 'plan value',  textStyle: { color: 'gray', fontFamily: 'Gordita-Bold' } },
+    { name: 'Discount Applied', icon: 'banana', textStyle: { color: 'yellow', fontFamily: 'Gordita-Regular' } },
+    { name: 'Amount paid', icon: 'cherry', textStyle: { color: 'green', fontFamily: 'Gordita-Bold' } },
+    { name: 'Date of Payment', icon: 'orange', textStyle: { color: 'orange', fontFamily: 'Gordita-Regular' } },
+    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
+    { name: 'Payment name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
+    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
+    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
+    { name: 'Payee name', icon: 'grapes', textStyle: { color: 'purple', fontFamily: 'Gordita-Bold' } },
+  ];
+
+  const getItemPrice = (itemName) => {
+    // Replace this with your logic to retrieve the price for the given item name
+    // You can use the transactions or any other data source to determine the price
+    // Return the price or an appropriate placeholder if the price is not available
+    return "$9.99";
+  };
+
   if (!fontsLoaded) {
     return null; // or render a loading indicator
   }
-
-  const listData = Array.from(Array(9).keys()); // Example list data with 9 items
 
   return (
     <SafeAreaView style={styles.container}>
@@ -85,7 +102,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <View style={styles.offerSection}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <View style={styles.hatIcon}>
-              <Image source={hatIcon} style={styles.hatIcon} resizeMode="contain" />
+              <Image source={hatIcon} style={styles.hatIconImage} resizeMode="contain" />
             </View>
           </TouchableOpacity>
           <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
@@ -98,41 +115,44 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
       <View style={styles.transactionListContainer}>
         <FlatList
           data={listData}
-          keyExtractor={(item) => item.toString()}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
             <>
               {index > 0 && <View style={styles.separator} />}
               <View style={styles.listItem}>
-                <Text style={styles.listItemText}>Item {item + 1}</Text>
-                <Text style={styles.listItemRightText}>Additional Info</Text>
+                <Text style={[styles.listItemText, item.textStyle]}>{item.name}
+                </Text>
+                <Text style={[styles.listItemRightText, item.textStyle]}>
+                  {getItemPrice(item.name)}
+                </Text>
               </View>
             </>
           )}
         />
       </View>
-      <View style={styles.totalAmountContainer}>
-        <View style={styles.totalAmountTextContainer}>
-          <Text style={styles.totalAmountTextLabel}>Total Amount:</Text>
-        </View>
-        <View style={styles.amountTextContainer}>
-          <Text style={styles.amountText}>$500</Text>
-        </View>
-      </View>
+
       <View style={styles.footerContainer}>
-        <View style={styles.footerItem}>
-          <Ionicons name="apps" size={16} color="black" />
-        </View>
-        <View style={styles.footerItem}>
-          <Ionicons name="book" size={16} color="black" />
-        </View>
-        <View style={styles.footerItem}>
-          <Ionicons name="text" size={16} color="black" />
-        </View>
-        <View style={styles.footerItem}>
-          <Ionicons name="people" size={16} color="black" />
-        </View>
-        <View style={styles.footerItem}>
-          <Ionicons name="download" size={16} color="black" />
+        <View style={styles.footerRow}>
+          <TouchableOpacity style={styles.footerIconContainer}>
+            <Icon name="home" size={24} color="black" style={styles.footerIcon} />
+            {/* <Text style={styles.footerText}>Home</Text> */}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerIconContainer}>
+            <Icon name="heart" size={24} color="black" style={styles.footerIcon} />
+            {/* <Text style={styles.footerText}>Favorites</Text> */}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerIconContainer}>
+            <Icon name="bell" size={24} color="black" style={styles.footerIcon} />
+            {/* <Text style={styles.footerText}>Notifications</Text> */}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerIconContainer}>
+            <Icon name="user" size={24} color="black" style={styles.footerIcon} />
+            {/* <Text style={styles.footerText}>Profile</Text> */}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.footerIconContainer}>
+            <Icon name="cog" size={24} color="black" style={styles.footerIcon} />
+            {/* <Text style={styles.footerText}>Settings</Text> */}
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -183,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Gordita-Bold',
     color: '#888888',
-   },
+  },
   modalBackground: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -268,45 +288,17 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   separator: {
-    height: 1,
+    height: 0.5,
     backgroundColor: 'gray',
     marginBottom: 5,
   },
   listItemText: {
     fontSize: 14,
     fontFamily: 'Gordita-Bold',
-    color: 'gray',
   },
   listItemRightText: {
     fontSize: 12,
     fontFamily: 'Gordita-Regular',
-    color: 'gray',
-  },
-  totalAmountContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginTop: 16,
-    marginLeft: 16,
-  },
-  totalAmountTextContainer: {
-    marginRight: 8,
-  },
-  totalAmountTextLabel: {
-    fontSize: 16,
-    fontFamily: 'Gordita-Bold',
-  },
-  amountTextContainer: {
-    backgroundColor: 'white',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-  },
-  amountText: {
-    fontSize: 16,
-    fontFamily: 'Gordita-Bold',
-    color: 'black',
-    alignSelf: 'flex-end',
   },
   footerContainer: {
     flexDirection: 'row',
@@ -317,10 +309,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderTopWidth: 1,
     borderTopColor: 'lightblue',
+   
   },
-  footerItem: {
+  footerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  footerIconContainer: {
     alignItems: 'center',
   },
+  footerIcon: {
+    fontSize: 20,
+    marginBottom: 1,
+  },
+  // footerText: {
+  //   fontSize: 12,
+  //   fontFamily: 'Gordita-Bold',
+  //   textAlign: 'center',
+  // },
 });
 
 export default BillingSummaryPage;
