@@ -22,21 +22,21 @@ const FeedbackPage = () => {
     return null; // or render a loading indicator
   }
 
-  const renderFeedbackSection = (isFirstSection, hasReply) => {
+  const FeedbackSection = ({ isFirstSection, hasReply }) => {
     const containerStyles = [
       styles.feedbackContainer,
-      styles.centerFeedbackContainer,
+      !isFirstSection && styles.centerFeedbackContainer,
     ];
     const issueContainerStyles = [
       styles.issueContainer,
-      styles.centerIssueContainer,
+      !isFirstSection && styles.centerIssueContainer,
     ];
     const smallCircleIconStyles = [styles.smallCircleIcon];
     const issueTextStyles = [styles.issueText];
     const dateTextStyles = [styles.dateText];
     const loremIpsumStyles = [
       styles.loremIpsum,
-      styles.removeMarginTop,
+      isFirstSection && styles.removeMarginTop,
     ];
     const bottomContainerStyles = [styles.bottomContainer];
     const iconsContainerStyles = [styles.iconsContainer];
@@ -47,6 +47,13 @@ const FeedbackPage = () => {
     const versionTextStyles = [styles.versionText];
     const replyAreaStyles = [styles.replyArea];
     const replyInputStyles = [styles.replyInput];
+    const replySectionStyles = [styles.replySection];
+    const answerStyles = [
+      styles.answer,
+      isFirstSection && styles.removeMarginTop,
+      hasReply ? styles.showAnswer : styles.hideAnswer,
+    ];
+    const heartIconStyles = [styles.heartIcon];
 
     return (
       <View style={containerStyles}>
@@ -58,12 +65,10 @@ const FeedbackPage = () => {
           />
           <Text style={issueTextStyles}>Study Material Issue</Text>
           <Text style={dateTextStyles}>July 8, 2023</Text>
+          {!isFirstSection && hasReply && <View style={styles.yellowIcon} />}
         </View>
         <Text style={loremIpsumStyles}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus nulla eu pulvinar
-          vulputate. Vestibulum pharetra velit id sapien vulputate malesuada. Nam gravida metus ut
-          nisi aliquet, id rutrum velit cursus. In luctus lacinia purus, eu molestie tortor
-          ultrices non.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus nulla eu pulvinar vulputate. Vestibulum pharetra velit id sapien vulputate malesuada. Nam gravida metus ut nisi aliquet, id rutrum velit cursus. In luctus lacinia purus, eu molestie tortor ultrices non.
         </Text>
         <View style={bottomContainerStyles}>
           <View style={iconsContainerStyles}>
@@ -90,6 +95,18 @@ const FeedbackPage = () => {
             />
           </View>
         )}
+        {!isFirstSection && hasReply && (
+          <View style={replySectionStyles}>
+            <Image
+              source={require('./assets/heart.png')}
+              style={heartIconStyles}
+              resizeMode="contain"
+            />
+            <Text style={styles.replyAnswer}>
+              This is the replied answer. It spans across multiple lines and is displayed below the icons.
+            </Text>
+          </View>
+        )}
       </View>
     );
   };
@@ -112,9 +129,9 @@ const FeedbackPage = () => {
             <Text style={[styles.subText, styles.secondSubText]}> Resolved 22</Text>
           </View>
         </View>
-        {renderFeedbackSection(true, true)}
-        {renderFeedbackSection(false, false)}
-        {renderFeedbackSection(false, true)}
+        <FeedbackSection isFirstSection={true} hasReply={true} />
+        <FeedbackSection isFirstSection={false} hasReply={false} />
+        <FeedbackSection isFirstSection={false} hasReply={true} />
       </View>
     </View>
   );
@@ -217,7 +234,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   iconsContainer: {
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: 'center',
   },
   iconTextContainer: {
@@ -257,8 +274,34 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     textAlign: 'center',
   },
-  removeMarginTop: {
-    marginTop: 0,
+  replySection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  answer: {
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'Gordita-Regular',
+    flex: 1,
+  },
+  showAnswer: {
+    display: 'flex',
+  },
+  hideAnswer: {
+    display: 'none',
+  },
+  heartIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  replyAnswer: {
+    fontSize: 14,
+    color: 'white',
+    fontFamily: 'Gordita-Regular',
+    flex: 1,
+    marginTop: -16,
   },
 });
 
