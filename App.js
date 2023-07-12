@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 
@@ -68,21 +76,33 @@ const FeedbackPage = () => {
           {!isFirstSection && hasReply && <View style={styles.yellowIcon} />}
         </View>
         <Text style={loremIpsumStyles}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus nulla eu pulvinar vulputate. Vestibulum pharetra velit id sapien vulputate malesuada. Nam gravida metus ut nisi aliquet, id rutrum velit cursus. In luctus lacinia purus, eu molestie tortor ultrices non.
+          I am not able to open the study room section whenever I tap on study
+          room its just throwing me out of the app and its not loading please
+          fix this I want to study for my exam tomorrow I have my papers
         </Text>
         <View style={bottomContainerStyles}>
           <View style={iconsContainerStyles}>
             <View style={iconTextContainerStyles}>
-              <Ionicons name="ios-attach" size={18} color="white" style={iconStyles} />
-              <Text style={iconTextStyles}>Clip</Text>
+              <Ionicons
+                name="ios-attach"
+                size={18}
+                color="gray"
+                style={iconStyles}
+              />
+              <Text style={iconTextStyles}>Payment receipt</Text>
             </View>
             <View style={iconTextContainerStyles}>
-              <Ionicons name="ios-videocam" size={18} color="white" style={iconStyles} />
+              <Ionicons
+                name="ios-videocam"
+                size={18}
+                color="gray"
+                style={iconStyles}
+              />
               <Text style={iconTextStyles}>Video</Text>
             </View>
           </View>
           <View style={versionContainerStyles}>
-            <Text style={versionTextStyles}>Version</Text>
+            <Text style={versionTextStyles}>V3.2.0</Text>
           </View>
         </View>
         {hasReply && (
@@ -103,7 +123,10 @@ const FeedbackPage = () => {
               resizeMode="contain"
             />
             <Text style={styles.replyAnswer}>
-              This is the replied answer. It spans across multiple lines and is displayed below the icons.
+              Hi thank you for your patience we have fixed the issue and you
+              should now be able to view the study room properly. Please log out
+              and log back in after a few minutes and make sure your app is up
+              to date to version 2.3.55. Thanks!
             </Text>
           </View>
         )}
@@ -112,7 +135,7 @@ const FeedbackPage = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.iconContainer}>
           <Ionicons name="ios-search" size={24} color="white" />
@@ -123,17 +146,17 @@ const FeedbackPage = () => {
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.greetingText}>User Problems- 34</Text>
+          <Text style={styles.greetingText}>User Problems - 34</Text>
           <View style={styles.inlineTextContainer}>
             <Text style={styles.subText}>Auditing 12,</Text>
-            <Text style={[styles.subText, styles.secondSubText]}> Resolved 22</Text>
+            <Text style={[styles.subText, styles.secondSubText]}>Resolved 22</Text>
           </View>
         </View>
         <FeedbackSection isFirstSection={true} hasReply={true} />
         <FeedbackSection isFirstSection={false} hasReply={false} />
         <FeedbackSection isFirstSection={false} hasReply={true} />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -155,40 +178,39 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
   textContainer: {
-    position: 'absolute',
-    top: -50,
-    left: 16,
+    marginBottom: 16,
   },
   greetingText: {
-    fontSize: 24,
+    fontSize: 20,
     color: 'white',
-    marginBottom: 8,
     fontFamily: 'Gordita-Bold',
+    marginBottom: 8,
+    marginTop: -30,
+    marginHorizontal: 40,
   },
   inlineTextContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
   },
   subText: {
     fontSize: 12,
-    color: 'white',
-    fontFamily: 'Gordita-Bold',
     color: 'yellow',
-    marginRight: 4,
+    fontFamily: 'Gordita-Bold',
+    marginRight: -29,
+    marginHorizontal: 35,
   },
   secondSubText: {
-    fontFamily: 'Gordita-Bold',
     color: 'green',
-    fontSize: 12,
   },
   feedbackContainer: {
     marginBottom: 16,
-    width: '90%',
+    padding: 8,
+    width: '100%',
+    alignItems: 'center',
   },
   centerFeedbackContainer: {
     alignItems: 'center',
@@ -211,13 +233,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     fontFamily: 'Gordita-Bold',
-    marginRight: 6,
+    marginRight: 74,
   },
   dateText: {
     fontSize: 12,
-    color: 'white',
     fontFamily: 'Gordita-Regular',
     marginRight: 4,
+  },
+  firstSectionDate: {
+    color: 'white',
+  },
+  replyDate: {
+    color: 'white',
+  },
+  colorIcon: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginLeft: 4,
+  },
+  firstSectionColorIcon: {
+    backgroundColor: 'green',
+  },
+  replyColorIcon: {
+    backgroundColor: 'yellow',
   },
   loremIpsum: {
     fontSize: 14,
@@ -225,7 +264,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingHorizontal: 16,
     fontFamily: 'Gordita-Regular',
-    textAlign: 'center',
+    textAlign: 'justify',
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -240,15 +279,15 @@ const styles = StyleSheet.create({
   iconTextContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 10,
   },
   icon: {
-    marginRight: 4,
+    marginRight: 6,
     height: 24,
     width: 24,
   },
   iconText: {
-    color: 'white',
+    color: 'gray',
   },
   versionContainer: {
     flex: 1,
@@ -278,6 +317,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 16,
+    paddingTop: 16,
   },
   answer: {
     fontSize: 14,
@@ -295,13 +335,14 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 8,
+    borderRadius: 12,
   },
   replyAnswer: {
     fontSize: 14,
     color: 'white',
     fontFamily: 'Gordita-Regular',
     flex: 1,
-    marginTop: -16,
+    marginTop: 8,
   },
 });
 
