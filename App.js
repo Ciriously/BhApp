@@ -5,9 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const BottomSheet = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const bottomSheetHeight = 300;
+  const bottomSheetHeight = 300; // Increase the height to display more items
   const animatedSheetHeight = useState(new Animated.Value(0))[0];
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('');
 
   const toggleSheet = () => {
     const toValue = isSheetOpen ? 0 : bottomSheetHeight;
@@ -18,6 +18,8 @@ const BottomSheet = () => {
     }).start();
     setIsSheetOpen(!isSheetOpen);
   };
+
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -47,20 +49,21 @@ const BottomSheet = () => {
     ];
 
     return months.map((month, index) => (
-      <React.Fragment key={index}>
-        <TouchableOpacity style={styles.monthItem}>
-          <View style={styles.monthTextContainer}>
-            <Text style={[styles.monthText, month.name === 'September' && styles.blueText]}>
-              {month.name}
-            </Text>
-            {month.hasDot && (
-              <MaterialIcons name="fiber-manual-record" size={8} color="#6658D3" style={styles.dotIcon} />
-            )}
-          </View>
-          <Text style={styles.yearText}>{new Date().getFullYear()}</Text>
-        </TouchableOpacity>
-        {index !== months.length - 1 && <View style={styles.monthSeparator} />}
-      </React.Fragment>
+      <TouchableOpacity
+        key={index}
+        style={[styles.monthItem, index !== months.length - 1 && styles.monthItemSpacing]}
+        onPress={() => setSelectedMonth(month.name)}
+      >
+        <View style={styles.monthTextContainer}>
+          <Text style={[styles.monthText, month.name === 'September' && styles.blueText]}>
+            {month.name}
+          </Text>
+          {month.hasDot && (
+            <MaterialIcons name="fiber-manual-record" size={8} color="#6658D3" style={styles.dotIcon} />
+          )}
+        </View>
+        <Text style={styles.yearText}>{new Date().getFullYear()}</Text>
+      </TouchableOpacity>
     ));
   };
 
@@ -71,8 +74,11 @@ const BottomSheet = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={toggleSheet}>
-        <Text style={styles.buttonText}>Open Bottom Sheet</Text>
+      <TouchableOpacity style={styles.monthSelector} onPress={toggleSheet}>
+        <Text style={styles.monthSelectorText}>
+          {selectedMonth || 'Select Month'}
+        </Text>
+        <MaterialIcons name={isSheetOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={24} color="black" />
       </TouchableOpacity>
       <Animated.View style={[styles.bottomSheet, { height: animatedSheetHeight }]}>
         <ScrollView contentContainerStyle={styles.monthsContainer}>
@@ -88,6 +94,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  monthSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#F4F7F8',
+    borderWidth: 1,
+    borderColor: '#F4F7F8',
+    borderRadius: 8,
+    marginBottom: 20,
+    width: '80%',
+  },
+  monthSelectorText: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+    marginRight: 5,
+    color: '#6B6B6B',
   },
   button: {
     padding: 10,
@@ -118,6 +142,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#ccc',
   },
+  monthItemSpacing: {
+    marginBottom: 10,
+  },
   monthTextContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -138,9 +165,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Gordita-Regular',
     color: '#CDCDCD',
-  },
-  monthSeparator: {
-    height: 10,
   },
 });
 
