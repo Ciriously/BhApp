@@ -1,234 +1,171 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, ScrollView } from 'react-native';
 import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [fontLoaded, setFontLoaded] = useState(false);
+const BottomSheet = () => {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const bottomSheetHeight = 300; // Increase the height to display more items
+  const animatedSheetHeight = useState(new Animated.Value(0))[0];
+  const [selectedMonth, setSelectedMonth] = useState('');
+
+  const toggleSheet = () => {
+    const toValue = isSheetOpen ? 0 : bottomSheetHeight;
+    Animated.timing(animatedSheetHeight, {
+      toValue: toValue,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+    setIsSheetOpen(!isSheetOpen);
+  };
+
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
-        'Gordita-Regular': require('./assets/fonts/Gordita-Regular.ttf'),
         'Gordita-Bold': require('./assets/fonts/Gordita-Bold.ttf'),
+        'Gordita-Regular': require('./assets/fonts/Gordita-Regular.ttf'),
       });
-      setFontLoaded(true);
+      setFontsLoaded(true);
     };
-
     loadFonts();
   }, []);
 
-  const handleLogin = () => {
-    // Perform login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
+  const renderMonths = () => {
+    const months = [
+      { name: 'January', hasDot: false },
+      { name: 'February', hasDot: false },
+      { name: 'March', hasDot: false },
+      { name: 'April', hasDot: false },
+      { name: 'May', hasDot: false },
+      { name: 'June', hasDot: false },
+      { name: 'July', hasDot: false },
+      { name: 'August', hasDot: false },
+      { name: 'September', hasDot: true },
+      { name: 'October', hasDot: false },
+      { name: 'November', hasDot: false },
+      { name: 'December', hasDot: false },
+    ];
+
+    return months.map((month, index) => (
+      <TouchableOpacity
+        key={index}
+        style={[styles.monthItem, index !== months.length - 1 && styles.monthItemSpacing]}
+        onPress={() => setSelectedMonth(month.name)}
+      >
+        <View style={styles.monthTextContainer}>
+          <Text style={[styles.monthText, month.name === 'September' && styles.blueText]}>
+            {month.name}
+          </Text>
+          {month.hasDot && (
+            <MaterialIcons name="fiber-manual-record" size={8} color="#6658D3" style={styles.dotIcon} />
+          )}
+        </View>
+        <Text style={styles.yearText}>{new Date().getFullYear()}</Text>
+      </TouchableOpacity>
+    ));
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  if (!fontsLoaded) {
+    // Return a loading state or any other component while the fonts are being loaded
+    return null;
+  }
 
-  return fontLoaded ? (
+  return (
     <View style={styles.container}>
-      <Image source={require('./assets/bhlogowhite.png')} style={styles.logo} />
-
-      <View style={styles.topSection}>
-        <Text style={styles.title}>Login</Text>
-      </View>
-
-      <View style={styles.formContainer}>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={[styles.input, styles.transparentOutline, styles.emailInput]}
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            autoCapitalize="none"
-            keyboardType="email-address"
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Password</Text>
-          <View style={[styles.passwordInputContainer, styles.transparentOutline]}>
-            <TextInput
-              style={styles.passwordInput}
-              placeholder="Enter your password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity onPress={togglePasswordVisibility}>
-              <Ionicons
-                name={showPassword ? 'eye-off' : 'eye'}
-                size={24}
-                color="gray"
-                style={styles.passwordIcon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.forgotPasswordButton}>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
-          <Text style={[styles.buttonText, { fontSize: 18 }]}>Login</Text>
-        </TouchableOpacity>
-
-        <View style={styles.signupContainer}>
-          <View style={styles.signupLine} />
-          <Text style={styles.signupText}>or signup now</Text>
-          <View style={styles.signupLine} />
-        </View>
-
-        <TouchableOpacity style={styles.createAccountContainer}>
-          <Text style={[styles.createAccountText, { fontSize: 18 }]}>Create an account</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.bottomSection}>
-        {/* Bottom section content */}
-      </View>
+      <TouchableOpacity style={styles.monthSelector} onPress={toggleSheet}>
+        <Text style={styles.monthSelectorText}>
+          {selectedMonth || 'Select Month'}
+        </Text>
+        <MaterialIcons name={isSheetOpen ? 'keyboard-arrow-up' : 'keyboard-arrow-down'} size={24} color="black" />
+      </TouchableOpacity>
+      <Animated.View style={[styles.bottomSheet, { height: animatedSheetHeight }]}>
+        <ScrollView contentContainerStyle={styles.monthsContainer}>
+          {renderMonths()}
+        </ScrollView>
+      </Animated.View>
     </View>
-  ) : null;
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingTop: 50,
-    paddingBottom: 30,
+    justifyContent: 'center',
   },
-  logo: {
-    width: 80,
-    height: 80,
-    position: 'absolute',
-    top: 20,
-    left: 20,
-  },
-  topSection: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 35,
-    fontFamily: 'Gordita-Bold',
-    marginBottom: 20,
-  },
-  formContainer: {
-    width: '80%',
-  },
-  inputContainer: {
-    marginBottom: 10,
-  },
-  label: {
-    paddingHorizontal: 0,
-    paddingTop: 8,
-    fontFamily: 'Gordita-Bold',
-    color: 'gray',
-    marginBottom: 5,
-  },
-  input: {
-    paddingHorizontal: 10,
-    paddingBottom: 8,
-    fontFamily: 'Gordita-Bold',
-    marginBottom: 10,
-  },
-  transparentOutline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 8,
-  },
-  emailInput: {
-    height: 50,
-  },
-  passwordInputContainer: {
+  monthSelector: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#F4F7F8',
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#F4F7F8',
     borderRadius: 8,
-    backgroundColor: 'transparent',
+    marginBottom: 20,
+    width: '80%',
   },
-  passwordInput: {
-    flex: 1,
-    paddingHorizontal: 10,
-    paddingBottom: 8,
+  monthSelectorText: {
+    fontSize: 16,
     fontFamily: 'Gordita-Bold',
-    backgroundColor: 'transparent',
-  },
-  passwordIcon: {
-    padding: 10,
+    marginRight: 5,
+    color: '#6B6B6B',
   },
   button: {
-    width: '100%',
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginBottom: 10,
+    padding: 10,
+    backgroundColor: 'blue',
+    borderRadius: 5,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontFamily: 'Gordita-Bold',
+    fontSize: 18,
   },
-  loginButton: {
-    backgroundColor: '#6658D3',
+  bottomSheet: {
+    backgroundColor: 'white',
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    paddingHorizontal: 20,
   },
-  forgotPasswordButton: {
-    alignSelf: 'flex-end',
-    marginBottom: 10,
+  monthsContainer: {
+    flexGrow: 1,
   },
-  forgotPasswordText: {
-    fontSize: 14,
-    color: 'gray',
-    fontFamily: 'Gordita-Bold',
-    bottom: 10,
-  },
-  bottomSection: {
-    alignItems: 'center',
-  },
-  signupContainer: {
+  monthItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+  },
+  monthItemSpacing: {
     marginBottom: 10,
   },
-  signupLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: 'gray',
-  },
-  signupText: {
-    fontSize: 14,
-    marginHorizontal: 10,
-    fontFamily: 'Gordita-Bold',
-    color: 'gray',
-  },
-  createAccountContainer: {
-    backgroundColor: '#F2F2F2',
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginBottom: 10,
+  monthTextContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  createAccountText: {
-    fontSize: 14,
-    color: 'gray',
+  monthText: {
+    fontSize: 16,
+    fontFamily: 'Gordita-Bold',
+    marginLeft: 5,
+    color: '#8E8E8E',
+  },
+  blueText: {
+    color: '#6658D3',
+  },
+  dotIcon: {
+    marginLeft: 5,
+  },
+  yearText: {
+    fontSize: 16,
     fontFamily: 'Gordita-Regular',
+    color: '#CDCDCD',
   },
 });
 
-export default LoginScreen;
+export default BottomSheet;
