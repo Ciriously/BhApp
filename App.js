@@ -10,6 +10,8 @@ import heartIcon from "./assets/heartIcon.png";
 import bellIcon from "./assets/bellIcon.png";
 import userIcon from "./assets/userIcon.png";
 import cogIcon from "./assets/cogIcon.png";
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Picker as SelectPicker } from '@react-native-picker/picker';
 
 const BillingSummaryPage = ({ transactions, navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -27,7 +29,6 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
 
     loadFonts();
   }, []);
-
   const handleOpenModal = () => {
     setIsModalVisible(true);
   };
@@ -37,20 +38,23 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
   };
 
   const listData = [
-    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12} },
-    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "₹100", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' , fontSize : 12} },
-    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize : 12 }, rightText: "₹699", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' , fontSize : 12} },
-    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize : 12 }, rightText: "24/4/2022", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
-    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "Aditya.D.Mishra", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' , fontSize : 12} },
-    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize : 12 }, rightText: "BH2021VERSION1", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
-    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "Lifetime-Active", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold', fontSize : 12 } },
-    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "Till Graduate", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
-    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "No Charges", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
+    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "₹100", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "₹699", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "24/4/2022", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "Aditya.D.Mishra", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "BH2021VERSION1", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "Lifetime-Active", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "Till Graduate", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 12 } },
+    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize: 12 }, rightText: "No Charges", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 12 } },
   ];
 
-  const totalPay = { label: 'Total Amount Paid', 
-  leftTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 15 ,borderRadius: 30, padding: 12, margin: 1,   },
-   rightText: "₹699.00", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 18 } };
+  const totalPay = {
+    label: 'Total Amount Paid',
+    leftTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 15, borderRadius: 30, padding: 12, margin: 1 },
+    rightText: "₹699.00",
+    rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 18 }
+  };
 
   if (!fontsLoaded) {
     return null; // or render a loading indicator
@@ -75,10 +79,10 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
         <Text style={styles.billingDetailsHeader}>Billing Details For</Text>
         <Text style={styles.billingDetailsSubtext}>Account: Adityad12@gmail.com</Text>
       </View>
-      <TouchableOpacity style={styles.monthContainer} onPress={handleOpenModal}>
+      <View style={styles.monthContainer}>
         <Text style={styles.monthLabel}>{selectedMonth ? selectedMonth : 'Select Month'}</Text>
-        <Icon name="caret-down" size={16} color="black" style={styles.dropdownIcon} />
-      </TouchableOpacity>
+        <AntDesign name="down" size={16} color="black" style={styles.dropdownIcon} />
+      </View>
 
       <Modal visible={isModalVisible} transparent={true} onRequestClose={handleCloseModal}>
         <TouchableOpacity style={styles.modalBackground} onPress={handleCloseModal} />
@@ -112,7 +116,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
               <Image source={hatIcon} style={styles.hatIconImage} resizeMode="contain" />
             </View>
           </TouchableOpacity>
-          <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
+          <Text style={styles.offersHeaderText}>₹ 799 Lifetime</Text>
         </View>
         <View style={[styles.offerSection, styles.offerContainer]}>
           <Text style={styles.offerText}>One Time payment for all materials till you Graduate</Text>
@@ -131,7 +135,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           )}
         />
       </View>
-      
+
       <View style={styles.totalPayContainer}>
         <Text style={[styles.listItemLeftText, totalPay.leftTextStyle]}>{totalPay.label}</Text>
         <Text style={[styles.listItemRightText, totalPay.rightTextStyle]}>{totalPay.rightText}</Text>
@@ -252,18 +256,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 1,
     shadowColor: 'black',
-    shadowOpacity: 0.2,
-   
-    shadowOffset: {
-    width: 0,
-    height: 2,
-    },
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 2,
   },
+  
   lifetimeText: {
-    fontSize: 12,
-    fontFamily: 'Gordita-regular',
+    fontSize: 11,
+    fontFamily: 'Gordita-Regular',
     color: 'black',
   },
   offerSection: {
@@ -304,7 +305,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 10,
     padding: 16,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#F4F7F8',
   },
   listItem: {
     flexDirection: 'row',
@@ -332,10 +333,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingVertical: 16,
+    paddingVertical: 7,
     paddingHorizontal: 32,
     borderTopWidth: 1,
-    borderTopColor: 'lightblue',
+    borderTopColor: '#6BC4F3',
   },
   footerRow: {
     flexDirection: 'row',
@@ -344,39 +345,40 @@ const styles = StyleSheet.create({
   },
   footerIconContainer: {
     alignItems: 'center',
+    paddingVertical: 4,
+    paddingTop: 4,
   },
   footerIcon: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
   },
   backButton: {
     borderRadius: 50,
     padding: 5,
   },
-  // backButtonCircleOutline: {
-  //   borderWidth: 1,
-  //   borderColor: 'gray',
-  //   borderRadius: 50,
-  // },
+  backButtonCircleOutline: {
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 50,
+  },
   backButtonCircle: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#E0E0E0',
     borderRadius: 50,
     padding: 5,
   },
   backIcon: {
     alignSelf: 'center',
-    color: 'gray',
+    color: 'black',
   },
-  // hatIcon: {
-  //   backgroundColor: '#6658D3',
-  //   borderRadius: 50,
-  //   padding: 8,
-  // },
 
   hatIconImage: {
     width: 40,
     height: 40,
     alignSelf: 'center',
+  },
+  dropdownIcon: {
+    marginLeft: 5,
+    color: '#A4A5A6',
   },
 });
 
