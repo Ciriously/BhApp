@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 12,
-    color: 'yellow',
+    color: '#FFB13B',
     fontFamily: 'Gordita-Bold',
     marginRight: -29,
     marginHorizontal: 35,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Gordita-Regular',
     paddingVertical: 10,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   replySection: {
     flexDirection: 'row',
