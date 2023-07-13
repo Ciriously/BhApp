@@ -37,20 +37,20 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
   };
 
   const listData = [
-    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 14 } },
-    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹100", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
-    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "₹699", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' } },
-    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "24/4/2022", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
-    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "Aditya.D.Mishra", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' } },
-    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "BH2021VERSION1", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
-    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "Lifetime-Active", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' } },
-    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "Till Graduate", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
-    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' }, rightText: "No Charges", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' } },
+    { label: 'Plan Value', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "₹799", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12} },
+    { label: 'Discount Applied', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "₹100", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold' , fontSize : 12} },
+    { label: 'Amount paid', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize : 12 }, rightText: "₹699", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' , fontSize : 12} },
+    { label: 'Date of Payment', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize : 12 }, rightText: "24/4/2022", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
+    { label: 'Payee Name', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "Aditya.D.Mishra", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold' , fontSize : 12} },
+    { label: 'Payment ID', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular', fontSize : 12 }, rightText: "BH2021VERSION1", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
+    { label: 'Smart Plan', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "Lifetime-Active", rightTextStyle: { color: '#6658D3', fontFamily: 'Gordita-Bold', fontSize : 12 } },
+    { label: 'Duration', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "Till Graduate", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
+    { label: 'Recurring Pay', leftTextStyle: { color: 'black', fontFamily: 'Gordita-Regular' , fontSize : 12}, rightText: "No Charges", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize : 12 } },
   ];
 
   const totalPay = { label: 'Total Amount Paid', 
-  leftTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 20 ,borderRadius: 30, padding: 12, margin: 1,   },
-   rightText: "₹699.00", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 20 } };
+  leftTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 15 ,borderRadius: 30, padding: 12, margin: 1,   },
+   rightText: "₹699.00", rightTextStyle: { color: 'black', fontFamily: 'Gordita-Bold', fontSize: 18 } };
 
   if (!fontsLoaded) {
     return null; // or render a loading indicator
@@ -103,6 +103,9 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
       </Modal>
 
       <View style={styles.offersContainer}>
+        <View style={styles.lifetimeContainer}>
+          <Text style={styles.lifetimeText}>LIFETIME</Text>
+        </View>
         <View style={styles.offerSection}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <View style={styles.hatIcon}>
@@ -112,7 +115,7 @@ const BillingSummaryPage = ({ transactions, navigation }) => {
           <Text style={styles.offersHeaderText}>Rs 799 Lifetime</Text>
         </View>
         <View style={[styles.offerSection, styles.offerContainer]}>
-          <Text style={styles.offerText}>One Time payment for allmaterials till you Graduate</Text>
+          <Text style={styles.offerText}>One Time payment for all materials till you Graduate</Text>
         </View>
       </View>
 
@@ -240,6 +243,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
+  lifetimeContainer: {
+    position: 'absolute',
+    top: -12,
+    right: 155,
+    backgroundColor: '#F4F7F8',
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 1,
+    shadowColor: 'black',
+    shadowOpacity: 0.2,
+   
+    shadowOffset: {
+    width: 0,
+    height: 2,
+    },
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  lifetimeText: {
+    fontSize: 12,
+    fontFamily: 'Gordita-regular',
+    color: 'black',
+  },
   offerSection: {
     flex: 1,
     flexDirection: 'row',
@@ -320,8 +346,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerIcon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
   },
   backButton: {
     borderRadius: 50,
